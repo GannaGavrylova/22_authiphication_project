@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../redux/slices/authSlice";
+import { register, resetState } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
@@ -15,7 +15,10 @@ function Register() {
     if (isSuccess) {
       navigate("/login");
     }
-  }, [isSuccess, navigate]);
+    return () => {
+      dispatch(resetState());
+    };
+  }, [isSuccess, navigate, dispatch]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",

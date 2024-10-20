@@ -17,7 +17,7 @@ export const register = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-  "auth/register",
+  "auth/login",
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post(API_URL + "login", userData);
@@ -38,7 +38,19 @@ const authSlice = createSlice({
     isSuccess: false,
     message: "",
   },
-  reducers: {},
+  reducers: {
+    resetState: (state) => {
+      state.isError = false;
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.message = "";
+    },
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      localStorage.removeItem("token");
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
@@ -73,4 +85,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { resetState, logout } = authSlice.actions;
 export default authSlice.reducer;

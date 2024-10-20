@@ -4,6 +4,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login/index";
 import Profile from "./pages/profile/index";
+import ProtectedRoute from "./components/protectedRoute";
 
 function App() {
   return (
@@ -22,12 +23,18 @@ function App() {
         <Link to="/profile">Profile</Link>
       </nav>
 
-      <Register />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );

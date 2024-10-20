@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../redux/slices/authSlice";
+import { login, resetState } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -29,7 +29,10 @@ function Login() {
     if (isSuccess) {
       navigate("/profile");
     }
-  }, [isSuccess, navigate]);
+    return () => {
+      dispatch(resetState());
+    };
+  }, [isSuccess, navigate, dispatch]);
 
   const { email, password } = formData;
 
